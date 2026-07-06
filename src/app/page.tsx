@@ -1,5 +1,5 @@
 import { Navbar } from "@/components/common/navbar";
-import { CTABanner } from "@/components/home/ctaBanner/CTABanner";
+import { CTA } from "@/components/home/ctaBanner/CTABanner";
 import { FAQ } from "@/components/home/faq/faq";
 import { Footer } from "@/components/home/footer/Footer";
 import { Hero } from "@/components/home/hero/Hero";
@@ -21,7 +21,7 @@ export default function Home() {
         <WhyChoose />
         <StartSelling />
         <FAQ />
-        <CTABanner />
+        <CTA />
         <Footer />
       </main>
     </div>

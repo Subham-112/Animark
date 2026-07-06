@@ -44,8 +44,9 @@ export default function CharacterCarouselDesktop() {
           return (
             <div
               key={character.id}
-              className="absolute left-1/2 top-1/2"
+              className="absolute left-1/2 top-1/2 min-w-[400px] h-[550px]"
               style={{
+                width: "400px",
                 transform: `
                   translate(-50%,-50%)
                   translateX(${translateX}px)

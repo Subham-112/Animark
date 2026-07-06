@@ -15,18 +15,18 @@ export function CharacterCard({
 }: CharacterCardProps) {
   return (
     <article
-      className={`group glass overflow-hidden rounded-xl md:rounded-3xl border border-white/10 transition-all duration-500
+      className={`group glass overflow-hidden rounded-xl md:rounded-3xl border border-white/10 transition-all duration-500 flex flex-col h-[550px] w-full
         ${active ? "shadow-[0_30px_80px_rgba(0,0,0,.45)]" : "opacity-90"}
       `}
     >
-      <div className="relative bg-black overflow-hidden">
+      <div className="relative bg-black overflow-hidden flex-shrink-0 h-[270px]">
         <Image
           src={character.image}
           alt={character.title}
           width={350}
           height={330}
           priority={active}
-          className="object-cover transition-transform duration-700 group-hover:scale-105"
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
         />
 
         <div className="absolute inset-x-0 top-0 flex items-center justify-between p-4">
@@ -42,7 +42,7 @@ export function CharacterCard({
         <div className="absolute bottom-0 left-0 right-0 h-36 bg-gradient-to-t from-black/80 to-transparent" />
       </div>
 
-      <div className="relative bg-[#04091B] space-y-2 p-4">
+      <div className="relative bg-[#04091B] space-y-2 p-4 h-[180px] flex flex-col justify-between">
         <div className="flex items-start justify-between">
           <div>
             <h3 className="text-2xl font-semibold">{character.title}</h3>

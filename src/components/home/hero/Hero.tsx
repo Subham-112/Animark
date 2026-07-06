@@ -48,39 +48,22 @@ export const Hero = () => {
 
   return (
     <section
-      className="
-        relative
-        overflow-hidden
-        bg-[#04091B]
-      "
+      className="relative overflow-hidden bg-[#04091B]"
       onMouseEnter={pause}
       onMouseLeave={resume}
     >
       <HeroBackground />
 
       {/* Slides */}
-
       <div
-        className="
-          relative
-          flex
-          transition-transform
-          duration-700
-          ease-out
-        "
+        className="relative flex transition-transform duration-700 ease-out"
         style={{
           transform: `translateX(-${currentIndex * 100}%)`,
         }}
       >
         {heroSlides.map((slide, index) => (
-          <div
-            key={slide.id}
-            className="min-w-full"
-          >
-            <HeroSlide
-              slide={slide}
-              active={index === currentIndex}
-            />
+          <div key={slide.id} className="min-w-full">
+            <HeroSlide slide={slide} active={index === currentIndex} />
           </div>
         ))}
       </div>

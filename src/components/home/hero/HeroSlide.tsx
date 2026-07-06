@@ -154,23 +154,7 @@ export const HeroSlide = ({ slide, active }: HeroSlideProps) => {
             "
           />
 
-          {/* Image Container */}
-
-          <div
-            className={`
-              relative
-              h-[620px]
-              w-full
-              max-w-[560px]
-              transition-all
-              duration-700
-              ${
-                active ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
-              }
-            `}
-          ></div>
           {/* Decorative Ring */}
-
           <div
             className="
                 absolute
@@ -187,7 +171,6 @@ export const HeroSlide = ({ slide, active }: HeroSlideProps) => {
           />
 
           {/* Glow */}
-
           <div
             className="
                 absolute
@@ -204,15 +187,10 @@ export const HeroSlide = ({ slide, active }: HeroSlideProps) => {
           />
 
           {/* Character Image */}
-
           <div
-            className="
-                relative
-                z-20
-                h-full
-                w-full
-                animate-float
-              "
+            className={`relative z-20 h-[620px] w-full max-w-[560px] animate-float transition-all duration-700 ${
+              active ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
+            }`}
           >
             <Image
               src={slide.image}
@@ -229,8 +207,8 @@ export const HeroSlide = ({ slide, active }: HeroSlideProps) => {
           <div
             className="
                 absolute
-                left-0
-                top-20
+                -left-20
+                top-0
                 z-30
                 rounded-2xl
                 border
@@ -254,8 +232,6 @@ export const HeroSlide = ({ slide, active }: HeroSlideProps) => {
           <div
             className="
                 absolute
-                bottom-16
-                right-0
                 z-30
                 rounded-2xl
                 border
@@ -266,6 +242,10 @@ export const HeroSlide = ({ slide, active }: HeroSlideProps) => {
                 backdrop-blur-xl
                 shadow-2xl
               "
+            style={{
+              right: 0,
+              bottom: 0
+            }}
           >
             <p className="text-xs uppercase tracking-[3px] text-slate-400">
               Verified
