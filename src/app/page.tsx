@@ -1,7 +1,7 @@
-import { Navbar } from "@/components/common/navbar";
+import { Navbar } from "@/components/common/navbar/navbar";
 import { CTA } from "@/components/home/ctaBanner/CTABanner";
 import { FAQ } from "@/components/home/faq/faq";
-import { Footer } from "@/components/home/footer/Footer";
+import { Footer } from "@/components/common/footer/Footer";
 import { Hero } from "@/components/home/hero/Hero";
 import { LearnAnimation } from "@/components/home/learnAnimation/LearnAnimation";
 import { StartSelling } from "@/components/home/startSelling/StartSelling";
