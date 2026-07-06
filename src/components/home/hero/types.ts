@@ -1,3 +1,5 @@
+import { StaticImageData } from "next/image";
+
 export interface HeroButton {
   label: string;
   href: string;
@@ -14,7 +16,7 @@ export interface HeroSlideData {
   title: string;
   highlight: string;
   description: string;
-  image: string
+  image: StaticImageData;
   primaryButton: HeroButton;
   secondaryButton: HeroButton;
   stats: HeroStat[];

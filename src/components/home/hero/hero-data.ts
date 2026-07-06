@@ -1,4 +1,8 @@
 import { HeroSlideData } from "./types";
+import character from "@/assets/images/character.png";
+import animation from "@/assets/images/animation.png";
+import course from "@/assets/images/course.png";
+import seller from "@/assets/images/seller.png";
 
 export const heroSlides: HeroSlideData[] = [
   {
@@ -11,7 +15,7 @@ export const heroSlides: HeroSlideData[] = [
     description:
       "Explore thousands of professionally crafted 2D characters for games, apps, websites and creative projects. Instant download with commercial licenses.",
 
-    image: "/images/hero/character.png",
+    image: character,
 
     primaryButton: {
       label: "Browse Assets",
@@ -50,7 +54,7 @@ export const heroSlides: HeroSlideData[] = [
     description:
       "Ready-to-use animation packs including idle, walk, attack, jump and combat animations for every game genre.",
 
-    image: "/images/hero/animation.png",
+    image: animation,
 
     primaryButton: {
       label: "Explore Animation",
@@ -89,7 +93,7 @@ export const heroSlides: HeroSlideData[] = [
     description:
       "Step-by-step premium animation courses taught by industry professionals. Learn from beginner to advanced.",
 
-    image: "/images/hero/course.png",
+    image: course,
 
     primaryButton: {
       label: "Start Learning",
@@ -119,27 +123,20 @@ export const heroSlides: HeroSlideData[] = [
 
   {
     id: 4,
-
     badge: "💰 Sell Worldwide",
-
     title: "Turn Your Art",
     highlight: "Into Income",
-
     description:
       "Open your digital store, sell characters, animation assets and courses to creators around the world.",
-
-    image: "/images/hero/seller.png",
-
+    image: seller,
     primaryButton: {
       label: "Start Selling",
       href: "/seller",
     },
-
     secondaryButton: {
       label: "Seller Guide",
       href: "/seller/guide",
     },
-
     stats: [
       {
         value: "₹12L+",

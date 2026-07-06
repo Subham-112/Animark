@@ -1,3 +1,5 @@
+import { StaticImageData } from "next/image";
+
 export interface CharacterBadge {
   label: string;
   color: string;
@@ -12,7 +14,7 @@ export interface TrendingCharacter {
   id: number;
   title: string;
   slug: string;
-  image: string;
+  image: StaticImageData;
   price: number;
   originalPrice?: number;
   rating: number;
