@@ -1,21 +1,20 @@
 import { GradientText } from "@/components/common/GradientText";
 import { AuthLayout } from "@/components/auth/AuthLayout";
-import { LoginForm } from "@/components/auth/LoginForm";
+import { SignupForm } from "@/components/auth/SignupForm";
 import { Footer } from "@/components/common/footer/Footer";
 
-export default function LoginPage() {
+export default function SignupPage() {
   return (
     <>
       <AuthLayout
         title={
           <>
-            Welcome Back to <GradientText>Animark</GradientText>
+            Join <GradientText>Animark</GradientText>
           </>
         }
-        subtitle="Sign in to continue exploring premium 2D characters, animation courses and manage your marketplace account."
-        isLogin={true}
+        subtitle="Create your account to purchase premium 2D characters, learn animation or start selling your own digital creations."
       >
-        <LoginForm />
+        <SignupForm />
       </AuthLayout>
       <Footer />
     </>
