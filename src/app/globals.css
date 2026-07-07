@@ -228,3 +228,13 @@
 .text-gradient {
   @apply bg-gradient-to-r from-white via-[#D8B4FE] via-45% via-[#F0ABFC] to-[#7DD3FC] bg-clip-text text-transparent;
 }
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #fff !important;
+  -webkit-box-shadow: 0 0 0 1000px rgba(255, 255, 255, 0) inset !important;
+  box-shadow: 0 0 0 1000px rgba(255, 255, 255, 0) inset !important;
+  transition: background-color 999999s ease-in-out 0s;
+  caret-color: #fff;
+}
