@@ -19,7 +19,7 @@ export function CharacterCard({
         ${active ? "shadow-[0_30px_80px_rgba(0,0,0,.45)]" : "opacity-90"}
       `}
     >
-      <div className="relative bg-black overflow-hidden flex-shrink-0 h-[270px]">
+      <div className="relative bg-black overflow-hidden flex-shrink-0" style={{ height: "65%" }}>
         <Image
           src={character.image}
           alt={character.title}
@@ -42,7 +42,7 @@ export function CharacterCard({
         <div className="absolute bottom-0 left-0 right-0 h-36 bg-gradient-to-t from-black/80 to-transparent" />
       </div>
 
-      <div className="relative bg-[#04091B] space-y-2 p-4 h-[180px] flex flex-col justify-between">
+      <div className="relative bg-[#04091B] space-y-2 p-4 flex flex-col justify-between" style={{ height: "35%" }}>
         <div className="flex items-start justify-between">
           <div>
             <h3 className="text-2xl font-semibold">{character.title}</h3>
