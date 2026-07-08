@@ -1,6 +1,6 @@
 import { GradientText } from "@/components/common/GradientText";
-import { AuthLayout } from "@/components/auth/AuthLayout";
-import { SignupForm } from "@/components/auth/SignupForm";
+import { AuthLayout } from "@/components/auth/signup-login/AuthLayout";
+import { SignupForm } from "@/components/auth/signup-login/SignupForm";
 import { Footer } from "@/components/common/footer/Footer";
 
 export default function SignupPage() {

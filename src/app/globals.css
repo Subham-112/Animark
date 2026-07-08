@@ -238,3 +238,13 @@ input:-webkit-autofill:focus {
   transition: background-color 999999s ease-in-out 0s;
   caret-color: #fff;
 }
+
+@keyframes toast-progress {
+  from {
+    transform: scaleX(1);
+  }
+
+  to {
+    transform: scaleX(0);
+  }
+}
