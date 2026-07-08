@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
+import { COOKIE_NAMES } from "./utils/cookies-names";
 
 export function middleware(req: NextRequest) {
-  const token = req.cookies.get("token")?.value;
+  const token = req.cookies.get(COOKIE_NAMES.USER_ACCESS_TOKEN)?.value;
   const pathname = req.nextUrl.pathname;
 
   if (pathname === "/") {
