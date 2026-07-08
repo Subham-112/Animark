@@ -4,7 +4,6 @@ import Image from "next/image";
 import authCharacter from "@/assets/images/auth-character.png";
 
 export const AuthIllustration = () => {
-  console.log("The auth charecter", authCharacter);
   return (
     <div className="relative flex h-[520px] w-[460px] items-center justify-center overflow-hidden rounded-lg border border-white/10 bg-gradient-to-br from-[#11182E] via-[#0B1228] to-[#131D37]">
       {/* Background Glow */}

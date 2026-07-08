@@ -2,22 +2,64 @@
 
 import Link from "next/link";
 import { Mail } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 import { AuthInput } from "./AuthInput";
 import { PasswordInput } from "./PasswordInput";
 import { Divider } from "./Divider";
+import { useLogin } from "@/api/auth/hooks/useLogin";
+import { LoginFormData, loginSchema } from "@/api/auth/schema";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "@/components/common/toast/toast";
 
 export const LoginForm = () => {
+  const router = useRouter();
+  const { login, loading } = useLogin();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormData>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  const onSubmit = async (data: LoginFormData) => {
+    try {
+      const response = await login({
+        email: data.email,
+        password: data.password,
+      });
+      console.log("Login response", response);
+
+      toast.success(response.message);
+      router.replace("/dashboard");
+    } catch (error) {
+      toast.error((error as Error).message);
+    }
+  };
+
   return (
-    <form className="space-y-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <AuthInput
         label="Email Address"
-        type="email"
-        placeholder="Enter your email"
+        placeholder="Email"
         icon={<Mail size={20} />}
+        error={errors.email}
+        {...register("email")}
       />
 
-      <PasswordInput label="Password" placeholder="Enter your password" />
+      <PasswordInput
+        label="Password"
+        placeholder="Password"
+        error={errors.password}
+        {...register("password")}
+      />
 
       <div className="flex items-center justify-between">
         <label className="flex cursor-pointer items-center gap-3">
@@ -39,9 +81,10 @@ export const LoginForm = () => {
 
       <button
         type="submit"
-        className="w-full rounded-lg bg-violet-500 py-3 font-semibold text-white transition-all duration-300 hover:bg-violet-400 hover:shadow-[0_15px_40px_rgba(124,58,237,.35)]"
+        className="w-full rounded-lg bg-violet-500 py-3 font-semibold text-white transition-all duration-300 hover:bg-violet-400 hover:shadow-[0_15px_40px_rgba(124,58,237,.35)] cursor-pointer"
+        disabled={loading}
       >
-        Sign In
+        {loading ? "Signing In..." : "Sign In"}
       </button>
 
       <Divider />
