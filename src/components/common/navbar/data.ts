@@ -83,3 +83,141 @@ export const userMenuItems = [
     icon: FileText,
   },
 ] as const;
+
+export const navItems = [
+  {
+    title: "Home",
+    href: "/",
+  },
+  {
+    title: "Assets",
+    href: "/assets",
+    menu: [
+      {
+        title: "Browse",
+        items: [
+          {
+            label: "Characters",
+            href: "/assets/characters",
+          },
+          {
+            label: "Backgrounds",
+            href: "/assets/backgrounds",
+          },
+          {
+            label: "Animals",
+            href: "/assets/animals",
+          },
+          {
+            label: "Props",
+            href: "/assets/props",
+          },
+          {
+            label: "UI Kits",
+            href: "/assets/ui-kits",
+          },
+          {
+            label: "Icons",
+            href: "/assets/icons",
+          },
+          {
+            label: "VFX",
+            href: "/assets/vfx",
+          },
+          {
+            label: "Vehicles",
+            href: "/assets/vehicles",
+          },
+        ],
+      },
+      {
+        title: "Explore",
+        items: [
+          {
+            label: "Trending",
+            href: "/assets/trending",
+          },
+          {
+            label: "New Releases",
+            href: "/assets/new",
+          },
+          {
+            label: "Best Sellers",
+            href: "/assets/best-selling",
+          },
+          {
+            label: "Featured",
+            href: "/assets/featured",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    title: "Creators",
+    href: "/creators",
+    menu: [
+      {
+        title: "Marketplace",
+        items: [
+          {
+            label: "Top Sellers",
+            href: "/creators/top",
+          },
+          {
+            label: "Featured Studios",
+            href: "/creators/studios",
+          },
+          {
+            label: "New Creators",
+            href: "/creators/new",
+          },
+        ],
+      },
+      {
+        title: "Sell",
+        items: [
+          {
+            label: "Become a Seller",
+            href: "/sell",
+          },
+          {
+            label: "Seller Dashboard",
+            href: "/seller",
+          },
+          {
+            label: "Guidelines",
+            href: "/seller/guidelines",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    title: "Free",
+    href: "/free",
+    menu: [
+      {
+        title: "Free Assets",
+        items: [
+          {
+            label: "Characters",
+            href: "/free/characters",
+          },
+          {
+            label: "Backgrounds",
+            href: "/free/backgrounds",
+          },
+          {
+            label: "Weekly Freebies",
+            href: "/free/weekly",
+          },
+          {
+            label: "Tutorials",
+            href: "/free/tutorials",
+          },
+        ],
+      },
+    ],
+  },
+];
