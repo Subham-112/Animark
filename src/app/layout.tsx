@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import { ToastProvider } from "@/components/common/toast/ToastProvider";
+import { AssetModalProvider } from "@/components/asset-modal/context/AssetModalProvider";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -37,7 +38,11 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased ${poppins.variable}`}
     >
       <body className="min-h-full flex flex-col">
-        <ToastProvider>{children}</ToastProvider>
+        <ToastProvider>
+          <AssetModalProvider>
+            {children}
+          </AssetModalProvider>
+        </ToastProvider>
       </body>
     </html>
   );

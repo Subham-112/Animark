@@ -90,6 +90,9 @@
   --sidebar-accent-foreground: oklch(0.99 0 0);
   --sidebar-border: oklch(1 0 0 / 8%);
   --sidebar-ring: oklch(0.65 0.21 295 / 60%);
+
+  /* Navbar */
+  --navbar-height: 80px;
 }
 
 @layer base {
@@ -247,4 +250,39 @@ input:-webkit-autofill:focus {
   to {
     transform: scaleX(0);
   }
+}
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #8b5cf6 rgba(255,255,255,0.05);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255,255,255,.04);
+  border-radius: 999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg,#8b5cf6,#6d28d9);
+  border-radius: 999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg,#a78bfa,#7c3aed);
+}
+
+.checkout-input {
+  @apply h-14 w-full rounded-2xl border border-white/10 bg-[#101845] px-5 text-white outline-none transition-all;
+}
+
+.checkout-input::placeholder {
+  @apply text-slate-500;
+}
+
+.checkout-input:focus {
+  @apply border-violet-500 ring-2 ring-violet-500/20;
 }
