@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { registerUser } from "../api";
+import { registerSeller, registerUser } from "../api";
 import { RegisterRequest } from "../types";
 
 export const useRegister = () => {
@@ -18,5 +18,15 @@ export const useRegister = () => {
     }
   };
 
-  return { register, loading };
+  const sellerRegister = async (payload: RegisterRequest) => {
+    try {
+      setLoading(true);
+      const response = await registerSeller(payload);
+      return response;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { register, loading, sellerRegister };
 };

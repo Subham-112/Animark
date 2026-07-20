@@ -15,7 +15,7 @@ import { toast } from "@/components/common/toast/toast";
 
 export const LoginForm = () => {
   const router = useRouter();
-  const { login, loading } = useLogin();
+  const { userLogin, loading } = useLogin();
 
   const {
     register,
@@ -31,14 +31,13 @@ export const LoginForm = () => {
 
   const onSubmit = async (data: LoginFormData) => {
     try {
-      const response = await login({
+      const response = await userLogin({
         email: data.email,
         password: data.password,
       });
-      console.log("Login response", response);
 
       toast.success(response.message);
-      router.replace("/dashboard");
+      // router.replace("/dashboard");
     } catch (error) {
       toast.error((error as Error).message);
     }

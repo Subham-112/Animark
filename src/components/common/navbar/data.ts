@@ -32,7 +32,7 @@ export const userMenuItems = [
   {
     title: "Become a Seller",
     description: "Start selling your assets",
-    href: "/seller",
+    href: "/become-seller",
     icon: Store,
   },
   {

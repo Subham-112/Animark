@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { MailCheck, X } from "lucide-react";
 
-import { verifyEmail } from "@/api/auth/api";
+import { sellerVerifyEmail, userVerifyEmail } from "@/api/auth/api";
 import { OTPInput } from "./OTPInput";
 import { ResendTimer } from "./ResendTimer";
 
@@ -14,6 +14,7 @@ interface VerifyEmailModalProps {
   devOtp?: string;
   onClose: () => void;
   onVerified: () => void;
+  isSellerVerify?: boolean;
 }
 
 export const VerifyEmailModal = ({
@@ -22,6 +23,7 @@ export const VerifyEmailModal = ({
   devOtp,
   onClose,
   onVerified,
+  isSellerVerify,
 }: VerifyEmailModalProps) => {
   const router = useRouter();
 
@@ -37,13 +39,11 @@ export const VerifyEmailModal = ({
     try {
       setLoading(true);
 
-      await verifyEmail({
-        email,
-        otp,
-      });
-      
-      onVerified();
-      router.replace("/login");
+      isSellerVerify
+        ? await sellerVerifyEmail({ email, otp })
+        : await userVerifyEmail({ email, otp });
+
+      isSellerVerify ? onVerified() : router.replace("/login");
     } finally {
       setLoading(false);
     }

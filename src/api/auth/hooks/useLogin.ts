@@ -2,13 +2,13 @@
 
 import { useState } from "react";
 
-import { loginUser } from "../api";
+import { loginSeller, loginUser } from "../api";
 import { LoginRequest } from "../types";
 
 export const useLogin = () => {
   const [loading, setLoading] = useState(false);
 
-  const login = async (payload: LoginRequest) => {
+  const userLogin = async (payload: LoginRequest) => {
     try {
       setLoading(true);
 
@@ -17,6 +17,17 @@ export const useLogin = () => {
       setLoading(false);
     }
   };
+  
+  const sellerLogin = async (payload: LoginRequest) => {
+    try {
+      setLoading(true)
+      // const response = await loginSeller(payload);
+      // return response;
+      return await loginSeller(payload);
+    } finally {
+      setLoading(false);
+    }
+  }
 
-  return { login, loading };
+  return { userLogin, loading, sellerLogin };
 };

@@ -16,7 +16,7 @@ export const registerUser = (data: RegisterRequest) => {
   );
 };
 
-export const verifyEmail = (data: VerifyEmailRequest) => {
+export const userVerifyEmail = (data: VerifyEmailRequest) => {
   return Post<VerifyEmailResponse, VerifyEmailRequest>(
     endpoints.auth.userVerifyEmail,
     data,
@@ -26,6 +26,27 @@ export const verifyEmail = (data: VerifyEmailRequest) => {
 export const loginUser = (data: LoginRequest) => {
   return Post<LoginResponse, LoginRequest>(
     endpoints.auth.userLogin,
+    data,
+  );
+};
+
+export const registerSeller = (data: RegisterRequest) => {
+  return Post<RegisterResponse, RegisterRequest>(
+    endpoints.auth.sellerRegister,
+    data
+  )
+}
+
+export const loginSeller = (data: LoginRequest) => {
+  return Post<LoginResponse, LoginRequest>(
+    endpoints.auth.sellerLogin,
+    data,
+  );
+};
+
+export const sellerVerifyEmail = (data: VerifyEmailRequest) => {
+  return Post<VerifyEmailResponse, VerifyEmailRequest>(
+    endpoints.auth.sellerVerifyEmail,
     data,
   );
 };
