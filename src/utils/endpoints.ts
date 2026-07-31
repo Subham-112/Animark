@@ -6,11 +6,18 @@ export const endpoints = {
 
     sellerRegister: "/api/sellers/register",
     sellerLogin: "/api/sellers/login",
-    sellerVerifyEmail: "/api/sellers/verify-email"
+    sellerVerifyEmail: "/api/sellers/verify-email",
+    userLogout: "/api/users/logout",
   },
 
   seller: {
-    profile: "/api/seller/profile",
+    currentUser: "/api/users/get-current",
+    profile: "/api/sellers/profile",
+  },
+
+  user: {
+    currentUser: "/api/users/get-current",
+    profile: "/api/sellers/profile",
   },
 
   product: {

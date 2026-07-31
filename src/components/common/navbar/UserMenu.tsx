@@ -1,15 +1,41 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Menu, User } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { User } from "lucide-react";
 
 import UserMenuDesktop from "./UserMenuDesktop";
 import UserMenuMobile from "./UserMenuMobile";
+import { COOKIE_NAMES } from "@/utils/cookies-names";
+import { useAuthStore } from "@/store/authStore";
 
-export default function UserMenu() {
+interface UserMenuProps {
+  onLogout?: () => void;
+}
+
+export default function UserMenu({ onLogout }: UserMenuProps) {
   const [open, setOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const pathname = usePathname();
+  const storeIsAuthenticated = useAuthStore((state) => state.isAuthenticated);
 
   const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const checkAuth = () => {
+      if (typeof document !== "undefined") {
+        const hasToken = document.cookie
+          .split("; ")
+          .some((item) =>
+            item.startsWith(`${COOKIE_NAMES.IS_AUTHENTICATED}=true`),
+          );
+
+        setIsLoggedIn(hasToken || storeIsAuthenticated);
+      }
+    };
+
+    checkAuth();
+  }, [pathname, storeIsAuthenticated]);
 
   useEffect(() => {
     const handleClick = (event: MouseEvent) => {
@@ -43,8 +69,18 @@ export default function UserMenu() {
         <User className="h-5 w-5" />
       </button>
 
-      <UserMenuDesktop open={open} onClose={() => setOpen(false)} />
-      <UserMenuMobile open={open} onClose={() => setOpen(false)} />
+      <UserMenuDesktop
+        open={open}
+        isLoggedIn={isLoggedIn}
+        onClose={() => setOpen(false)}
+        onLogout={onLogout}
+      />
+      <UserMenuMobile
+        open={open}
+        isLoggedIn={isLoggedIn}
+        onClose={() => setOpen(false)}
+        onLogout={onLogout}
+      />
     </div>
   );
 }

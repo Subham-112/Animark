@@ -4,17 +4,37 @@ import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronRight } from "lucide-react";
 
-import { userMenuItems } from "./data";
+import { userMenuItems, logoutMenuItem } from "./data";
 
 interface UserMenuDesktopProps {
   open: boolean;
+  isLoggedIn: boolean;
   onClose: () => void;
+  onLogout?: () => void;
 }
 
 export default function UserMenuDesktop({
   open,
+  isLoggedIn,
   onClose,
+  onLogout,
 }: UserMenuDesktopProps) {
+  let itemsToRender: any[] = [];
+
+  if (isLoggedIn) {
+    // Show from "Become a Seller" onwards and add logout button
+    const becomeSellerIndex = userMenuItems.findIndex(
+      (item) => "title" in item && item.title === "Become a Seller"
+    );
+    const subItems = becomeSellerIndex !== -1 ? userMenuItems.slice(becomeSellerIndex) : userMenuItems;
+    itemsToRender = [...subItems, { divider: true }, logoutMenuItem];
+  } else {
+    // Show all options except "Become a Seller" and logout
+    itemsToRender = userMenuItems.filter(
+      (item) => !("title" in item && item.title === "Become a Seller")
+    );
+  }
+
   return (
     <AnimatePresence>
       {open && (
@@ -47,15 +67,37 @@ export default function UserMenuDesktop({
           </div>
 
           <div className="p-2">
-            {userMenuItems.map((item, index) => {
+            {itemsToRender.map((item, index) => {
               if ("divider" in item && item.divider) {
                 return (
                   <div key={index} className="my-2 border-t border-white/10" />
                 );
               }
 
-              const menuItem = item as Exclude<typeof item, { divider: true }>;
+              const menuItem = item;
               const Icon = menuItem.icon;
+
+              if (menuItem.isLogout) {
+                return (
+                  <button
+                    key={menuItem.title}
+                    type="button"
+                    onClick={() => {
+                      onClose();
+                      onLogout?.();
+                    }}
+                    className="group flex w-full items-center justify-between rounded-sm px-4 py-3 text-red-400 transition-all duration-200 hover:bg-red-500/10"
+                  >
+                    <div className="flex items-center gap-3">
+                      <Icon className="h-5 w-5 text-red-400" />
+                      <span className="text-sm font-medium text-red-400">
+                        {menuItem.title}
+                      </span>
+                    </div>
+                    <ChevronRight className="h-4 w-4 text-red-400/50 transition-transform duration-200 group-hover:translate-x-1" />
+                  </button>
+                );
+              }
 
               return (
                 <Link
@@ -102,3 +144,4 @@ export default function UserMenuDesktop({
     </AnimatePresence>
   );
 }
+

@@ -4,12 +4,21 @@ import {
   FileText,
   GraduationCap,
   LogIn,
+  LogOut,
   Mail,
   ShieldCheck,
   Sparkles,
   Store,
   UserPlus,
 } from "lucide-react";
+
+export const logoutMenuItem = {
+  title: "Logout",
+  description: "Sign out of your account",
+  href: "#logout",
+  icon: LogOut,
+  isLogout: true,
+} as const;
 
 export const userMenuItems = [
   {
@@ -82,7 +91,8 @@ export const userMenuItems = [
     href: "/terms-and-conditions",
     icon: FileText,
   },
-] as const;
+];
+
 
 export const navItems = [
   {

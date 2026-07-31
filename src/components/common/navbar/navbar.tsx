@@ -1,13 +1,32 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { PlaySquare } from "lucide-react";
 import UserMenu from "./UserMenu";
 import { navItems } from "./data";
 import { NavItem } from "./NavItem";
+import { useLogout } from "@/api/auth/hooks/useLogout";
+import { toast } from "@/components/common/toast/toast";
+import { useAuthStore } from "@/store/authStore";
 
 export const Navbar = () => {
+  const router = useRouter();
+  const { userLogout } = useLogout();
+  const logoutStore = useAuthStore((state) => state.logout);
+
+  const handleLogout = async () => {
+    try {
+      const response = await userLogout();
+      logoutStore();
+      toast.success(response?.message || "Logout successfully");
+      router.push("/login");
+    } catch (error: any) {
+      toast.error(error.message || "Failed to logout");
+    }
+  };
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-white/5 bg-[#04091b]/90 backdrop-blur-xl">
       <div className="mx-auto flex h-[74px] max-w-[95%] items-center justify-between px-12">
@@ -42,9 +61,10 @@ export const Navbar = () => {
         {/* Right */}
         <div className="flex items-center gap-8">
           {/* Avatar */}
-          <UserMenu />
+          <UserMenu onLogout={handleLogout} />
         </div>
       </div>
     </header>
   );
 };
+

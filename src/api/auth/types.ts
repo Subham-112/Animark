@@ -43,3 +43,33 @@ export interface LoginResponse {
     };
   };
 }
+
+export interface CurrentUser {
+  _id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  isEmailVerified: boolean;
+  isPhoneVerified: boolean;
+  status: "active" | "inactive" | "blocked";
+  fcmTokens: string[];
+  deleted: boolean;
+  isSeller?: boolean;
+  seller?: any;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+
+export interface GetCurrentUserResponse {
+  statusCode: number;
+  success: boolean;
+  message: string;
+  data: CurrentUser;
+}
+
+export interface LogoutResponse {
+  status: boolean;
+  message: string;
+}
+

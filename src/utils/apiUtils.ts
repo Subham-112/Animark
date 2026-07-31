@@ -1,84 +1,81 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
-import { TokenStorage } from "./localstorage";
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 
 // Define API base URL
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const api = axios.create({
   baseURL: BASE_URL,
-  timeout: 10000, // Default timeout in milliseconds
+  timeout: 10000, // Default 10s timeout managed natively by Axios
   withCredentials: true,
 });
 
-// Axios request interceptor for Authorization
+// Axios request interceptor
 api.interceptors.request.use(
-  (config) => {
-    const token =
-      typeof window !== "undefined" ? TokenStorage.getAuthToken() : null;
-
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-
-    return config;
-  },
-  (error) => Promise.reject(error),
+  (config) => config,
+  (error) => Promise.reject(error)
 );
 
 let isRedirecting = false;
 
+const publicPaths = [
+  "/login",
+  "/signup",
+  "/register",
+  "/forgot-password",
+  "/reset-password",
+  "/privacy-policy",
+  "/terms-and-conditions",
+  "/contact",
+];
+
+const shouldSkipRedirect = () => {
+  if (typeof window === "undefined") return true;
+  const pathname = window.location.pathname;
+  return publicPaths.includes(pathname) || pathname.startsWith("/api/");
+};
+
+// Response Interceptor for Global 401 Handling
 api.interceptors.response.use(
   (response) => response,
-
-  async (error) => {
+  (error: AxiosError) => {
     const status = error.response?.status;
-    if (status === 401) {
+
+    if (status === 401 && !shouldSkipRedirect()) {
       if (typeof window !== "undefined" && !isRedirecting) {
         isRedirecting = true;
+        
+        // Clear auth indicator if needed
+        document.cookie = "is_authenticated=; Max-Age=0; path=/;";
 
-        setTimeout(() => {
-          window.location.href = "/login";
-        }, 800);
+        window.location.href = "/login";
       }
     }
 
     return Promise.reject(error);
-  },
+  }
 );
 
-// Helper function to make Axios requests
+/**
+  * Central Request Handler
+  */
 export const request = async <T>(
-  config: AxiosRequestConfig,
+  config: AxiosRequestConfig
 ): Promise<AxiosResponse<T>> => {
-  const controller = new AbortController();
-  const timeout = config.timeout || 10000;
-  const timeoutId = setTimeout(() => controller.abort(), timeout);
-
   try {
-    // Handle multipart form data
-    if (config.data instanceof FormData) {
-      config.headers = {
-        ...config.headers,
-        "Content-Type": "multipart/form-data",
-      };
-    }
+    // Note: Do NOT set "Content-Type" manually for FormData. 
+    // Axios handles multipart/form-data boundaries automatically.
 
-    const response = await api.request({
+    return await api.request<T>({
+      withCredentials: true,
       ...config,
-      signal: controller.signal,
     });
-
-    clearTimeout(timeoutId);
-    return response;
   } catch (error: any) {
-    clearTimeout(timeoutId);
-
-    // Handle AbortError (timeout)
-    if (error.name === "AbortError") {
-      throw new Error(`⏱️ Request timed out after ${timeout / 1000}s`);
+    // 1. Handle Axios Timeout
+    if (error.code === "ECONNABORTED" || error.name === "CanceledError") {
+      throw new Error(`⏱️ Request timed out after ${(config.timeout || 10000) / 1000}s`);
     }
 
-    // Handle Axios error
+    // 2. Handle API Response Error (4xx, 5xx)
     if (error.response) {
       const responseData = error.response.data;
 
@@ -91,89 +88,60 @@ export const request = async <T>(
       throw new Error(message);
     }
 
-    // Handle no response (network issues, CORS)
+    // 3. Handle Network Errors / CORS Issues
     if (error.request) {
-      throw new Error("📡 No response from server. Please check your network.");
+      throw new Error("📡 No response from server. Please check your network connection.");
     }
 
-    // Fallback for unknown error
+    // 4. Fallback Error
     throw new Error(`⚠️ Unexpected error: ${error.message || "Unknown error"}`);
   }
 };
 
-// Fetch utility function
+/* --- HTTP Method Helpers --- */
+
 export const Fetch = async <T>(
   url: string,
   params?: Record<string, unknown>,
-  timeout?: number,
+  timeout?: number
 ): Promise<T> => {
-  const response = await request<T>({
-    method: "GET",
-    url,
-    params,
-    timeout,
-  });
+  const response = await request<T>({ method: "GET", url, params, timeout });
   return response.data;
 };
 
-// Post utility function
-export const Post = async <TResponse, TRequest>(
+export const Post = async <TResponse, TRequest = unknown>(
   url: string,
-  data: TRequest | FormData,
-  timeout?: number,
+  data?: TRequest | FormData,
+  timeout?: number
 ): Promise<TResponse> => {
-  const response = await request<TResponse>({
-    method: "POST",
-    url,
-    data,
-    timeout,
-  });
+  const response = await request<TResponse>({ method: "POST", url, data, timeout });
   return response.data;
 };
 
-// Put utility function
-export const Put = async <T>(
+export const Put = async <TResponse, TRequest = unknown>(
   url: string,
-  data: Record<string, unknown> | FormData,
-  timeout?: number,
-): Promise<T> => {
-  const response = await request<T>({
-    method: "PUT",
-    url,
-    data,
-    timeout,
-  });
+  data?: TRequest | FormData,
+  timeout?: number
+): Promise<TResponse> => {
+  const response = await request<TResponse>({ method: "PUT", url, data, timeout });
   return response.data;
 };
 
-// Delete utility function
+export const Patch = async <TResponse, TRequest = unknown>(
+  url: string,
+  data?: TRequest | FormData,
+  timeout?: number
+): Promise<TResponse> => {
+  const response = await request<TResponse>({ method: "PATCH", url, data, timeout });
+  return response.data;
+};
+
 export const Delete = async <T>(
   url: string,
   data?: Record<string, unknown>,
   params?: Record<string, unknown>,
-  timeout?: number,
+  timeout?: number
 ): Promise<T> => {
-  const response = await request<T>({
-    method: "DELETE",
-    url,
-    data,
-    params,
-    timeout,
-  });
-  return response.data;
-};
-
-// Patch utility function
-export const Patch = async <T>(
-  url: string,
-  data: Record<string, unknown> | FormData,
-  timeout?: number,
-): Promise<T> => {
-  const response = await request<T>({
-    method: "PATCH",
-    url,
-    data,
-    timeout,
-  });
+  const response = await request<T>({ method: "DELETE", url, data, params, timeout });
   return response.data;
 };

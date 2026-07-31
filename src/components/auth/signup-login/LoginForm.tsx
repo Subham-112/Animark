@@ -37,7 +37,7 @@ export const LoginForm = () => {
       });
 
       toast.success(response.message);
-      // router.replace("/dashboard");
+      router.replace("/");
     } catch (error) {
       toast.error((error as Error).message);
     }

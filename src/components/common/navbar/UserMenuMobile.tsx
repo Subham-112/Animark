@@ -3,14 +3,32 @@
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 
-import { userMenuItems } from "./data";
+import { userMenuItems, logoutMenuItem } from "./data";
 
 interface UserMenuMobileProps {
   open: boolean;
+  isLoggedIn: boolean;
   onClose: () => void;
+  onLogout?: () => void;
 }
 
-export default function UserMenuMobile({ open, onClose }: UserMenuMobileProps) {
+export default function UserMenuMobile({ open, isLoggedIn, onClose, onLogout }: UserMenuMobileProps) {
+  let itemsToRender: any[] = [];
+
+  if (isLoggedIn) {
+    // Show from "Become a Seller" onwards and add logout button
+    const becomeSellerIndex = userMenuItems.findIndex(
+      (item) => "title" in item && item.title === "Become a Seller"
+    );
+    const subItems = becomeSellerIndex !== -1 ? userMenuItems.slice(becomeSellerIndex) : userMenuItems;
+    itemsToRender = [...subItems, { divider: true }, logoutMenuItem];
+  } else {
+    // Show all options except "Become a Seller" and logout
+    itemsToRender = userMenuItems.filter(
+      (item) => !("title" in item && item.title === "Become a Seller")
+    );
+  }
+
   return (
     <AnimatePresence>
       {open && (
@@ -50,7 +68,7 @@ export default function UserMenuMobile({ open, onClose }: UserMenuMobileProps) {
             </div>
 
             <div className="max-h-[70vh] overflow-y-auto py-3">
-              {userMenuItems.map((item, index) => {
+              {itemsToRender.map((item, index) => {
                 if ("divider" in item && item.divider) {
                   return (
                     <div
@@ -60,11 +78,35 @@ export default function UserMenuMobile({ open, onClose }: UserMenuMobileProps) {
                   );
                 }
 
-                const menuItem = item as Exclude<
-                  typeof item,
-                  { divider: true }
-                >;
+                const menuItem = item;
                 const Icon = menuItem.icon;
+
+                if (menuItem.isLogout) {
+                  return (
+                    <button
+                      key={menuItem.title}
+                      type="button"
+                      onClick={() => {
+                        onClose();
+                        onLogout?.();
+                      }}
+                      className="group mx-3 flex w-[calc(100%-24px)] items-center gap-4 rounded-2xl px-4 py-3 text-red-400 transition-all duration-300 active:scale-[0.98] active:bg-red-500/10"
+                    >
+                      <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-red-500/20 bg-red-500/10">
+                        <Icon className="h-5 w-5 text-red-400" />
+                      </div>
+
+                      <div className="text-left">
+                        <p className="font-medium text-red-400">{menuItem.title}</p>
+                        {menuItem.description && (
+                          <p className="text-xs text-red-400/60">
+                            {menuItem.description}
+                          </p>
+                        )}
+                      </div>
+                    </button>
+                  );
+                }
 
                 return (
                   <Link
@@ -100,3 +142,4 @@ export default function UserMenuMobile({ open, onClose }: UserMenuMobileProps) {
     </AnimatePresence>
   );
 }
+

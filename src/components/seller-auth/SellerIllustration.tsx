@@ -3,41 +3,40 @@ import {
   Globe,
   Package,
   ShieldCheck,
-  Store,
   Wallet,
 } from "lucide-react";
 
 export default function SellerIllustration() {
   const steps = [
-    "Create Account",
-    "Verify Email",
+    "Apply",
+    "Review",
+    "Approval",
     "Setup Store",
-    "Upload Products",
     "Start Selling",
   ];
 
   const benefits = [
     {
       icon: Globe,
-      title: "Sell Worldwide",
-      description: "Reach customers from anywhere with your digital products.",
+      title: "Quality Marketplace",
+      description: "Every application is reviewed before approval, helping maintain a trusted marketplace.",
     },
     {
       icon: Package,
-      title: "Instant Delivery",
+      title: "Your Own Store",
       description:
-        "Products are delivered automatically after successful payment.",
+        "Build your creator profile and showcase your digital products.",
     },
     {
       icon: ShieldCheck,
-      title: "Secure Payments",
-      description: "Protected transactions for both sellers and customers.",
+      title: "Digital Product Sales",
+      description: "Sell characters, animation assets, templates and premium courses.",
     },
     {
       icon: Wallet,
       title: "Automatic Payouts",
       description:
-        "Receive your earnings directly into your registered bank account.",
+        "Receive your earnings directly to your registered bank account after successful sales.",
     },
   ];
 
@@ -53,12 +52,13 @@ export default function SellerIllustration() {
         </span>
 
         <h2 className="mt-3 text-2xl font-bold leading-tight text-white">
-          Turn Your Creativity Into Income
+          Share Your Creativity With The World
         </h2>
 
         <p className="mt-2 max-w-xl text-sm leading-6 text-slate-400">
-          Open your own digital store and sell characters, animation assets and
-          professional courses to creators around the world.
+          Apply to become an Animark seller and start selling characters,
+          animation assets and premium courses. Our team reviews every
+          application to ensure a high-quality marketplace.
         </p>
       </div>
 

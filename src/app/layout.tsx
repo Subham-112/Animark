@@ -4,6 +4,7 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import { ToastProvider } from "@/components/common/toast/ToastProvider";
 import { AssetModalProvider } from "@/components/asset-modal/context/AssetModalProvider";
+import InitialAppLoader from "@/providers/InitialAppLoader";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -39,9 +40,9 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <ToastProvider>
-          <AssetModalProvider>
-            {children}
-          </AssetModalProvider>
+          <InitialAppLoader>
+            <AssetModalProvider>{children}</AssetModalProvider>
+          </InitialAppLoader>
         </ToastProvider>
       </body>
     </html>

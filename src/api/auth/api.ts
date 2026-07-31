@@ -1,12 +1,14 @@
-import { Post } from "@/utils/apiUtils";
+import { Fetch, Post } from "@/utils/apiUtils";
 import { endpoints } from "@/utils/endpoints";
 import {
+  GetCurrentUserResponse,
   LoginRequest,
   LoginResponse,
   RegisterRequest,
   RegisterResponse,
   VerifyEmailRequest,
   VerifyEmailResponse,
+  LogoutResponse,
 } from "./types";
 
 export const registerUser = (data: RegisterRequest) => {
@@ -24,24 +26,18 @@ export const userVerifyEmail = (data: VerifyEmailRequest) => {
 };
 
 export const loginUser = (data: LoginRequest) => {
-  return Post<LoginResponse, LoginRequest>(
-    endpoints.auth.userLogin,
-    data,
-  );
+  return Post<LoginResponse, LoginRequest>(endpoints.auth.userLogin, data);
 };
 
 export const registerSeller = (data: RegisterRequest) => {
   return Post<RegisterResponse, RegisterRequest>(
     endpoints.auth.sellerRegister,
-    data
-  )
-}
-
-export const loginSeller = (data: LoginRequest) => {
-  return Post<LoginResponse, LoginRequest>(
-    endpoints.auth.sellerLogin,
     data,
   );
+};
+
+export const loginSeller = (data: LoginRequest) => {
+  return Post<LoginResponse, LoginRequest>(endpoints.auth.sellerLogin, data);
 };
 
 export const sellerVerifyEmail = (data: VerifyEmailRequest) => {
@@ -50,3 +46,12 @@ export const sellerVerifyEmail = (data: VerifyEmailRequest) => {
     data,
   );
 };
+
+export const getCurrentUser = () => {
+  return Fetch<GetCurrentUserResponse>(endpoints.user.currentUser);
+};
+
+export const logoutUser = () => {
+  return Post<LogoutResponse, undefined>(endpoints.auth.userLogout, undefined);
+};
+
