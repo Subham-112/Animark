@@ -4,6 +4,7 @@ import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 
 import { userMenuItems, logoutMenuItem } from "./data";
+import { useAuthStore } from "@/store/authStore";
 
 interface UserMenuMobileProps {
   open: boolean;
@@ -13,6 +14,7 @@ interface UserMenuMobileProps {
 }
 
 export default function UserMenuMobile({ open, isLoggedIn, onClose, onLogout }: UserMenuMobileProps) {
+  const user = useAuthStore((state) => state.user);
   let itemsToRender: any[] = [];
 
   if (isLoggedIn) {
@@ -20,8 +22,18 @@ export default function UserMenuMobile({ open, isLoggedIn, onClose, onLogout }: 
     const becomeSellerIndex = userMenuItems.findIndex(
       (item) => "title" in item && item.title === "Become a Seller"
     );
-    const subItems = becomeSellerIndex !== -1 ? userMenuItems.slice(becomeSellerIndex) : userMenuItems;
-    itemsToRender = [...subItems, { divider: true }, logoutMenuItem];
+    const subItems =
+      becomeSellerIndex !== -1
+        ? userMenuItems.slice(becomeSellerIndex)
+        : userMenuItems;
+
+    const filteredSubItems = user?.isSeller
+      ? subItems.filter(
+          (item) => !("title" in item && item.title === "Become a Seller")
+        )
+      : subItems;
+
+    itemsToRender = [...filteredSubItems, { divider: true }, logoutMenuItem];
   } else {
     // Show all options except "Become a Seller" and logout
     itemsToRender = userMenuItems.filter(

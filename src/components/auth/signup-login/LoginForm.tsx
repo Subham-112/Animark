@@ -8,6 +8,7 @@ import { AuthInput } from "./AuthInput";
 import { PasswordInput } from "./PasswordInput";
 import { Divider } from "./Divider";
 import { useLogin } from "@/api/auth/hooks/useLogin";
+import { useCurrentUser } from "@/api/auth/hooks/useCurrentUser";
 import { LoginFormData, loginSchema } from "@/api/auth/schema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -16,6 +17,7 @@ import { toast } from "@/components/common/toast/toast";
 export const LoginForm = () => {
   const router = useRouter();
   const { userLogin, loading } = useLogin();
+  const { getCurrent } = useCurrentUser();
 
   const {
     register,
@@ -35,6 +37,8 @@ export const LoginForm = () => {
         email: data.email,
         password: data.password,
       });
+
+      await getCurrent();
 
       toast.success(response.message);
       router.replace("/");

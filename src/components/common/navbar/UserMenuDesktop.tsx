@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ChevronRight } from "lucide-react";
 
 import { userMenuItems, logoutMenuItem } from "./data";
+import { useAuthStore } from "@/store/authStore";
 
 interface UserMenuDesktopProps {
   open: boolean;
@@ -19,6 +20,7 @@ export default function UserMenuDesktop({
   onClose,
   onLogout,
 }: UserMenuDesktopProps) {
+  const user = useAuthStore((state) => state.user);
   let itemsToRender: any[] = [];
 
   if (isLoggedIn) {
@@ -26,8 +28,18 @@ export default function UserMenuDesktop({
     const becomeSellerIndex = userMenuItems.findIndex(
       (item) => "title" in item && item.title === "Become a Seller"
     );
-    const subItems = becomeSellerIndex !== -1 ? userMenuItems.slice(becomeSellerIndex) : userMenuItems;
-    itemsToRender = [...subItems, { divider: true }, logoutMenuItem];
+    const subItems =
+      becomeSellerIndex !== -1
+        ? userMenuItems.slice(becomeSellerIndex)
+        : userMenuItems;
+
+    const filteredSubItems = user?.isSeller
+      ? subItems.filter(
+          (item) => !("title" in item && item.title === "Become a Seller")
+        )
+      : subItems;
+
+    itemsToRender = [...filteredSubItems, { divider: true }, logoutMenuItem];
   } else {
     // Show all options except "Become a Seller" and logout
     itemsToRender = userMenuItems.filter(

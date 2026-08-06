@@ -2,10 +2,12 @@ import { GradientText } from "@/components/common/GradientText";
 import { AuthLayout } from "@/components/auth/signup-login/AuthLayout";
 import { LoginForm } from "@/components/auth/signup-login/LoginForm";
 import { Footer } from "@/components/common/footer/Footer";
+import { Navbar } from "@/components/common/navbar/navbar";
 
 export default function LoginPage() {
   return (
     <>
+      <Navbar />
       <AuthLayout
         title={
           <>
