@@ -22,5 +22,6 @@ export const endpoints = {
 
   product: {
     list: "/api/products",
+    uploadSignature: "/api/products/upload-signature",
   },
 } as const;
