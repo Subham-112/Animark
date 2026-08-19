@@ -23,7 +23,7 @@ export default function TablePagination({
   const pages = Array.from({ length: totalPages }, (_, index) => index + 1);
 
   return (
-    <div className="mt-6 flex flex-col gap-4 rounded-2xl border border-white/10 bg-[#081223] p-4 lg:flex-row lg:items-center lg:justify-between">
+    <div className="mt-6 flex flex-col gap-4 rounded-[18px] border border-white/10 bg-[#081223] p-4 lg:flex-row lg:items-center lg:justify-between">
       <div className="text-sm text-slate-400">
         Showing <span className="font-medium text-white">{start}</span> to{" "}
         <span className="font-medium text-white">{end}</span> of{" "}

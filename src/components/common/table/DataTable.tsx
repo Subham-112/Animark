@@ -43,7 +43,7 @@ export default function DataTable({
 
   return (
     <div
-      className={`overflow-hidden rounded-2xl border border-white/10 bg-[#081223] ${className}`}
+      className={`overflow-hidden rounded-[18px] border border-white/10 bg-[#081223] ${className}`}
     >
       {/* Horizontal Scroll */}
       <div className="overflow-x-auto scrollbar-none">
